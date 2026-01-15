@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnapReels - Admin Panel Complete Guide</title>
+    <!-- Import Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #080b11;
+            --card-bg: #0f1524;
+            --sidebar-bg: #0c101a;
+            --border-color: rgba(255, 255, 255, 0.06);
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.15);
+            --cyan: #06b6d4;
+            --cyan-glow: rgba(6, 182, 212, 0.15);
+            --emerald: #10b981;
+            --emerald-glow: rgba(16, 185, 129, 0.15);
+            --amber: #f59e0b;
+            --amber-glow: rgba(245, 158, 11, 0.15);
+            --accent-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #06b6d4 100%);
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        /* Sidebar Navigation */
+        aside {
+            width: 280px;
+            min-width: 280px;
+            flex-shrink: 0;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 50;
+            padding: 24px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            background: var(--accent-gradient);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: white;
+            font-family: 'Outfit', sans-serif;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .logo-text {
+            font-size: 1.25rem;
+            background: linear-gradient(to right, #ffffff, #9ca3af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-grow: 1;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-secondary);
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: left;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+            width: 100%;
+            text-decoration: none;
+        }
+
+        .nav-btn:hover {
+            color: var(--text-primary);
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        .nav-btn.active {
+            color: #ffffff;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(168, 85, 247, 0.1) 100%);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.05);
+        }
+
+        .nav-btn svg {
+            transition: var(--transition-smooth);
+        }
+
+        .nav-btn.active svg {
+            transform: scale(1.1);
+            color: #a855f7;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .support-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(6, 182, 212, 0.05) 100%);
+            border: 1px solid rgba(99, 102, 241, 0.15);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .support-card p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .support-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .support-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: var(--transition-smooth);
+        }
+
+        .support-link.whatsapp {
+            background-color: #25d366;
+            color: black;
+        }
+
+        .support-link.whatsapp:hover {
+            box-shadow: 0 0 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .support-link.email {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .support-link.email:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Main Content Area */
+        main {
+            flex: 1 1 0%;
+            min-width: 0;
+            padding: 40px;
+            max-width: 1200px;
+            transition: var(--transition-smooth);
+        }
+
+        header {
+            margin-bottom: 40px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 16px;
+        }
+
+        .badge.primary {
+            background-color: var(--primary-glow);
+            color: #818cf8;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, #9ca3af 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 800px;
+        }
+
+        /* Step Card Styling */
+        .step-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            position: relative;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            transition: var(--transition-smooth);
+        }
+
+        .step-card:hover {
+            border-color: rgba(99, 102, 241, 0.2);
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.03);
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .step-number {
+            width: 36px;
+            height: 36px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            font-size: 1.1rem;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+        }
+
+        .step-title {
+            font-size: 1.4rem;
+            color: #ffffff;
+        }
+
+        .step-content {
+            color: var(--text-secondary);
+            font-size: 0.98rem;
+        }
+
+        .step-content p {
+            margin-bottom: 16px;
+        }
+
+        /* Code Block Container */
+        .code-container {
+            position: relative;
+            background-color: #05070c;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin: 16px 0;
+            overflow: hidden;
+        }
+
+        .code-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 16px;
+            background-color: rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid var(--border-color);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .code-body {
+            padding: 16px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            color: #38bdf8;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        .copy-btn {
+            background-color: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition-smooth);
+        }
+
+        .copy-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .copy-btn.copied {
+            background-color: var(--emerald-glow);
+            border-color: rgba(16, 185, 129, 0.3);
+            color: #34d399;
+        }
+
+        /* Callout Box styling */
+        .callout {
+            padding: 18px;
+            border-radius: 12px;
+            margin: 20px 0;
+            display: flex;
+            gap: 16px;
+        }
+
+        .callout.info {
+            background-color: var(--cyan-glow);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            color: #22d3ee;
+        }
+
+        .callout.warning {
+            background-color: var(--amber-glow);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            color: #fbbf24;
+        }
+
+        .callout.success {
+            background-color: var(--emerald-glow);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            color: #34d399;
+        }
+
+        .callout-icon {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .callout-body h4 {
+            margin-bottom: 6px;
+            color: white;
+        }
+
+        /* Image Display Grid */
+        .image-showcase {
+            margin: 24px 0;
+            background-color: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .image-showcase img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            transition: var(--transition-smooth);
+            border: 1px solid var(--border-color);
+        }
+
+        .image-showcase img:hover {
+            transform: scale(1.01);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .image-caption {
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-family: 'Outfit', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Code highlight helpers */
+        .token-keyword { color: #f472b6; }
+        .token-string { color: #34d399; }
+        .token-comment { color: #6b7280; font-style: italic; }
+        .token-function { color: #60a5fa; }
+
+        /* Responsive Layout */
+        @media (max-width: 1024px) {
+            body {
+                flex-direction: column;
+            }
+            aside {
+                width: 100%;
+                min-width: 100%;
+                height: auto;
+                position: static;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                padding: 20px;
+                overflow-y: visible;
+            }
+            .logo-area {
+                margin-bottom: 20px;
+            }
+            .nav-menu {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .nav-btn {
+                width: auto;
+                flex: 1 1 calc(50% - 8px);
+                justify-content: center;
+            }
+            .sidebar-footer {
+                display: none;
+            }
+            main {
+                width: 100%;
+                padding: 24px 16px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .nav-btn {
+                flex: 1 1 100%;
+            }
+            header h1 {
+                font-size: 2rem;
+            }
+            .step-card {
+                padding: 20px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <aside>
+        <div class="logo-area">
+            <img src="images/logo.png" alt="SnapReels Logo" style="width: 38px; height: 38px; border-radius: 10px; object-fit: cover; box-shadow: 0 4px 20px rgba(239, 68, 68, 0.4);">
+            <div class="logo-text">SnapReels Panel</div>
+        </div>
+
+        <nav class="nav-menu">
+            <a href="index.html" class="nav-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg>
+                Hosting Web Setup
+            </a>
+            <a href="vps.html" class="nav-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                VPS Web Setup
+            </a>
+            <a href="android.html" class="nav-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+                Android App Setup
+            </a>
+            <a href="admin_guide.html" class="nav-btn active">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                Admin Panel Guide
+            </a>
+            <a href="upgrade.html" class="nav-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+                Upgrade Guide
+            </a>
+            <a href="faq.html" class="nav-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                FAQ & Troubleshooting
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="support-card">
+                <p>Need Technical Help?</p>
+                <div class="support-links">
+                    <a href="https://wa.me/212724328337" target="_blank" class="support-link whatsapp">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.977h.004c4.368 0 7.926-3.559 7.93-7.934A7.897 7.897 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.69-4.98c-.202-.101-1.194-.59-1.378-.656-.185-.067-.32-.1-.455.1-.134.2-.52.656-.637.79-.116.135-.234.15-.435.05-.201-.1-.85-.314-1.62-.999-.598-.534-1.003-1.196-1.121-1.396-.118-.2-.012-.307.088-.407.09-.09.201-.235.302-.353.1-.117.133-.2.201-.336.069-.135.034-.253-.017-.354-.052-.102-.455-1.099-.623-1.503-.164-.397-.32-.343-.455-.35-.127-.007-.274-.007-.422-.007-.148 0-.389.055-.593.278-.204.223-.78.762-.78 1.857 0 1.094.797 2.15 1.083 2.531.286.381 1.567 2.393 3.799 3.359.53.23 0 .43.9.725.22.072.483.18.663.2.18.02.66-.27 1.14-.665.48-.395.48-.665.36-.885-.12-.22-.389-.355-.59-.456z"/>
+                        </svg>
+                        WhatsApp Support
+                    </a>
+                    <a href="mailto:businessboussetta@gmail.com" class="support-link email">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+                        </svg>
+                        Email Support
+                    </a>
+                </div>
+            </div>
+        </div>
+    </aside>
+        
+        <main class="content">
+            <div class="hero">
+                <h1>Admin Panel Guide</h1>
+                <p>Learn how to manage content, users, and monetization settings.</p>
+            </div>
+            
+            <section class="section" id="catalog">
+                <h2>1. Content Management (Series & Episodes)</h2>
+                <div class="step-card">
+                    <div class="step-header">
+                        <h3 class="step-title" style="color: var(--emerald);">Adding a New Drama Series</h3>
+                    </div>
+                    <div class="step-content">
+                        <p>Go to <strong>Catalog > Series</strong> in the left sidebar and click "Add New Series". Fill in the title, description, and upload a poster image. You can use the built-in <strong>AI Metadata Generator</strong> to automatically write an engaging description and SEO tags.</p>
+                        <p>You can also configure if the series is "Premium" (requires coins) or "Free" by toggling the switch at the bottom of the form.</p>
+                        <div class="image-showcase">
+                            <img src="images/admin_add_series.png" alt="Add Series Form with AI Button highlighted">
+                            <div class="image-caption">Catalog > Series > Add New Series</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-header">
+                        <h3 class="step-title" style="color: var(--emerald);">Uploading Episodes</h3>
+                    </div>
+                    <div class="step-content">
+                        <p>Inside an existing Series, navigate to the <strong>Episodes</strong> tab. Click "Add Episode". You can choose the source format:</p>
+                        <ul style="margin-left: 20px; margin-bottom: 16px;">
+                            <li><strong>Direct Link:</strong> Paste a direct `.mp4` or `.m3u8` (HLS) link.</li>
+                            <li><strong>Local Upload:</strong> Upload an MP4 video directly to your server (supports chunking for large files).</li>
+                            <li><strong>Embed Code:</strong> Paste an iframe from external sources like YouTube or Dailymotion.</li>
+                        </ul>
+                        <div class="image-showcase">
+                            <img src="images/admin_add_episode.png" alt="Episode Upload Interface showing Direct Link and Local Upload options">
+                            <div class="image-caption">Episode Upload Interface</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="monetization">
+                <h2>2. Monetization Configuration</h2>
+                <div class="step-card">
+                    <div class="step-header">
+                        <h3 class="step-title" style="color: var(--amber);">Configuring Coin Packs</h3>
+                    </div>
+                    <div class="step-content">
+                        <p>Navigate to <strong>Monetization > Coin Packs</strong>. Here you can define pricing packages (e.g., 100 Coins for $1.00).</p>
+                        <p><strong>Crucial Step for Android:</strong> You must ensure the `Product ID` you enter here exactly matches the Product ID you create in the Google Play Console under In-App Products.</p>
+                        <div class="image-showcase">
+                            <img src="images/admin_coin_packs.png" alt="Coin Packs list showing price and Product ID fields">
+                            <div class="image-caption">Monetization > Coin Packs</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-header">
+                        <h3 class="step-title" style="color: var(--amber);">Payment Gateways (Web App)</h3>
+                    </div>
+                    <div class="step-content">
+                        <p>Go to <strong>Settings > Payment Gateways</strong>. You can enable or disable Stripe, PayPal, Razorpay, or Flutterwave individually.</p>
+                        <p>Ensure you switch off "Sandbox Mode" and input your Live Secret/Public keys when you are ready to accept real payments.</p>
+                        <div class="image-showcase">
+                            <img src="images/admin_payment_gateways.png" alt="Payment Gateways Settings showing Stripe and PayPal toggles">
+                            <div class="image-caption">Settings > Payment Gateways</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="users">
+                <h2>3. User Management</h2>
+                <div class="step-card">
+                    <div class="step-header">
+                        <h3 class="step-title" style="color: var(--cyan);">Managing Users &amp; Customer Accounts</h3>
+                    </div>
+                    <div class="step-content">
+                        <p>Go to <strong>Users</strong> in the left sidebar to view and manage all registered customer accounts. From this dashboard you can:</p>
+                        <ul style="margin-left: 20px; margin-bottom: 16px;">
+                            <li>Search users instantly by Name, Email, or Unique ID.</li>
+                            <li>View their registration date, email address, and user ID.</li>
+                            <li>Monitor their live coin balance and activity status.</li>
+                            <li>Manage account actions and permissions using the action menu.</li>
+                        </ul>
+                        <div class="image-showcase">
+                            <img src="images/admin_user_history.png" alt="Manage Users Dashboard showing accounts and coin balances">
+                            <div class="image-caption">Users &gt; Manage Users Dashboard</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+</body>
+</html>

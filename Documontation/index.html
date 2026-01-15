@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnapReels Hosting Web Setup</title>
+    <!-- Import Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #080b11;
+            --card-bg: #0f1524;
+            --sidebar-bg: #0c101a;
+            --border-color: rgba(255, 255, 255, 0.06);
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.15);
+            --cyan: #06b6d4;
+            --cyan-glow: rgba(6, 182, 212, 0.15);
+            --emerald: #10b981;
+            --emerald-glow: rgba(16, 185, 129, 0.15);
+            --amber: #f59e0b;
+            --amber-glow: rgba(245, 158, 11, 0.15);
+            --accent-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #06b6d4 100%);
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        /* Sidebar Navigation */
+        aside {
+            width: 280px;
+            min-width: 280px;
+            flex-shrink: 0;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 50;
+            padding: 24px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            background: var(--accent-gradient);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: white;
+            font-family: 'Outfit', sans-serif;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .logo-text {
+            font-size: 1.25rem;
+            background: linear-gradient(to right, #ffffff, #9ca3af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-grow: 1;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-secondary);
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: left;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+            width: 100%;
+            text-decoration: none;
+        }
+
+        .nav-btn:hover {
+            color: var(--text-primary);
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        .nav-btn.active {
+            color: #ffffff;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(168, 85, 247, 0.1) 100%);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.05);
+        }
+
+        .nav-btn svg {
+            transition: var(--transition-smooth);
+        }
+
+        .nav-btn.active svg {
+            transform: scale(1.1);
+            color: #a855f7;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .support-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(6, 182, 212, 0.05) 100%);
+            border: 1px solid rgba(99, 102, 241, 0.15);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .support-card p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .support-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .support-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: var(--transition-smooth);
+        }
+
+        .support-link.whatsapp {
+            background-color: #25d366;
+            color: black;
+        }
+
+        .support-link.whatsapp:hover {
+            box-shadow: 0 0 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .support-link.email {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .support-link.email:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Main Content Area */
+        main {
+            flex: 1 1 0%;
+            min-width: 0;
+            padding: 40px;
+            max-width: 1200px;
+            transition: var(--transition-smooth);
+        }
+
+        header {
+            margin-bottom: 40px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 16px;
+        }
+
+        .badge.primary {
+            background-color: var(--primary-glow);
+            color: #818cf8;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, #9ca3af 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 800px;
+        }
+
+        /* Step Card Styling */
+        .step-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            position: relative;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            transition: var(--transition-smooth);
+        }
+
+        .step-card:hover {
+            border-color: rgba(99, 102, 241, 0.2);
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.03);
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .step-number {
+            width: 36px;
+            height: 36px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            font-size: 1.1rem;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+        }
+
+        .step-title {
+            font-size: 1.4rem;
+            color: #ffffff;
+        }
+
+        .step-content {
+            color: var(--text-secondary);
+            font-size: 0.98rem;
+        }
+
+        .step-content p {
+            margin-bottom: 16px;
+        }
+
+        /* Image Display Grid */
+        .image-showcase {
+            margin: 24px 0;
+            background-color: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .image-showcase img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            transition: var(--transition-smooth);
+            border: 1px solid var(--border-color);
+        }
+
+        .image-showcase img:hover {
+            transform: scale(1.01);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .image-caption {
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-family: 'Outfit', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Responsive Layout */
+        @media (max-width: 1024px) {
+            body {
+                flex-direction: column;
+            }
+            aside {
+                width: 100%;
+                min-width: 100%;
+                height: auto;
+                position: static;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                padding: 20px;
+                overflow-y: visible;
+            }
+            .logo-area {
+                margin-bottom: 20px;
+            }
+            .nav-menu {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .nav-btn {
+                width: auto;
+                flex: 1 1 calc(50% - 8px);
+                justify-content: center;
+            }
+            .sidebar-footer {
+                display: none;
+            }
+            main {
+                width: 100%;
+                padding: 24px 16px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .nav-btn {
+                flex: 1 1 100%;
+            }
+            header h1 {
+                font-size: 2rem;
+            }
+            .step-card {
+                padding: 20px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <aside>
+        <div class="logo-area">
+            <img src="images/logo.png" alt="SnapReels Logo" style="width: 38px; height: 38px; border-radius: 10px; object-fit: cover; box-shadow: 0 4px 20px rgba(239, 68, 68, 0.4);">
+            <div class="logo-text">SnapReels Panel</div>
+        </div>
+
+        <nav class="nav-menu">
+            <a href="index.html" class="nav-btn active">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg>
+                Hosting Web Setup
+            </a>
+            <a href="vps.html" class="nav-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                VPS Web Setup
+            </a>
+            <a href="android.html" class="nav-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+                Android App Setup
+            </a>
+            <a href="admin_guide.html" class="nav-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                Admin Panel Guide
+            </a>
+            <a href="upgrade.html" class="nav-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+                Upgrade Guide
+            </a>
+            <a href="faq.html" class="nav-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                FAQ & Troubleshooting
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="support-card">
+                <p>Need Technical Help?</p>
+                <div class="support-links">
+                    <a href="https://wa.me/212724328337" target="_blank" class="support-link whatsapp">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.977h.004c4.368 0 7.926-3.559 7.93-7.934A7.897 7.897 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.69-4.98c-.202-.101-1.194-.59-1.378-.656-.185-.067-.32-.1-.455.1-.134.2-.52.656-.637.79-.116.135-.234.15-.435.05-.201-.1-.85-.314-1.62-.999-.598-.534-1.003-1.196-1.121-1.396-.118-.2-.012-.307.088-.407.09-.09.201-.235.302-.353.1-.117.133-.2.201-.336.069-.135.034-.253-.017-.354-.052-.102-.455-1.099-.623-1.503-.164-.397-.32-.343-.455-.35-.127-.007-.274-.007-.422-.007-.148 0-.389.055-.593.278-.204.223-.78.762-.78 1.857 0 1.094.797 2.15 1.083 2.531.286.381 1.567 2.393 3.799 3.359.53.23 0 .43.9.725.22.072.483.18.663.2.18.02.66-.27 1.14-.665.48-.395.48-.665.36-.885-.12-.22-.389-.355-.59-.456z"/>
+                        </svg>
+                        WhatsApp Support
+                    </a>
+                    <a href="mailto:businessboussetta@gmail.com" class="support-link email">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+                        </svg>
+                        Email Support
+                    </a>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main>
+        <header>
+            <div class="badge primary">Shared / Cloud Hosting</div>
+            <h1>Hosting Web Setup Guide</h1>
+            <p>Follow these step-by-step instructions to set up and deploy the SnapReels web server on your hosting provider panel.</p>
+        </header>
+
+        <!-- Architecture Overview -->
+        <div class="step-card" style="border: 1px solid var(--primary); background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(15, 21, 36, 1) 100%);">
+            <div class="step-header">
+                <h2 class="step-title" style="color: #a855f7;">🏗️ Architecture Overview</h2>
+            </div>
+            <div class="step-content">
+                <p>SnapReels is a full-stack SaaS platform divided into three main components that work together seamlessly:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 10px;">
+                    <li><strong>The Web Backend & API (Node.js/Next.js):</strong> This is the core of your platform. It connects to the MongoDB database, processes video streams, handles secure payments (Stripe/PayPal), and serves the API endpoints that the mobile app communicates with.</li>
+                    <li><strong>The Admin Panel (Web):</strong> Built into the web backend, this is your secure dashboard (`/admin/login`). It allows you to manage drama series, episodes, users, monetization settings (coin packs, VIP), and push notifications.</li>
+                    <li><strong>The Android App (Kotlin):</strong> This is the native mobile client your users will download from the Play Store. It fetches videos, UI settings, and content dynamically from your Web Backend API.</li>
+                </ol>
+                <div style="background: rgba(16, 185, 129, 0.1); border-left: 4px solid var(--emerald); padding: 12px 16px; border-radius: 4px; margin-top: 15px;">
+                    <strong>Setup Sequence:</strong> You MUST set up the <strong>Web Backend & Admin Panel first</strong> (using this guide). Once the backend is live and your database is running, you can proceed to the <a href="android.html" style="color: var(--emerald);">Android App Setup</a> and connect it to your live API URL.
+                </div>
+            </div>
+        </div>
+
+        <!-- End-User Experience -->
+        <div class="step-card" style="border: 1px solid var(--cyan); background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(15, 21, 36, 1) 100%); margin-bottom: 30px;">
+            <div class="step-header">
+                <h2 class="step-title" style="color: var(--cyan);">📱 End-User Experience</h2>
+            </div>
+            <div class="step-content">
+                <p>Understanding how a customer interacts with SnapReels is key to configuring your platform effectively:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 10px;">
+                    <li><strong>Browsing & Discovery:</strong> Viewers open the app and browse Drama Series through the Featured Slider, trending sections, and categories. The interface mimics popular short-video apps, offering a vertical, swipe-up video feed (Shorts).</li>
+                    <li><strong>Watching & Unlocking:</strong> The first few episodes of a series are usually set as "Free" to hook the viewer. When they reach a "Premium" episode, playback stops, and a prompt appears asking them to unlock the episode using <strong>Coins</strong>.</li>
+                    <li><strong>Purchasing Coins:</strong> If a viewer doesn't have enough coins, they are redirected to the Wallet screen. Here, they can purchase Coin Packs (e.g., 100 Coins for $1.99) using secure gateways like Google Play Billing (on Android) or Stripe/PayPal (on the web).</li>
+                    <li><strong>Rewards System:</strong> Viewers can also earn free coins by completing daily check-ins or watching Rewarded Video Ads, keeping engagement high even for non-paying users.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Server & Environment Requirements Card -->
+        <div class="step-card" style="border: 1px solid #10b981; background: linear-gradient(135deg, rgba(16, 185, 129, 0.06) 0%, rgba(15, 21, 36, 1) 100%); margin-bottom: 30px;">
+            <div class="step-header">
+                <div class="step-number" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">⚡</div>
+                <h2 class="step-title" style="color: #34d399;">Server &amp; System Requirements</h2>
+            </div>
+            <div class="step-content">
+                <p>Before proceeding with deployment, ensure your server or cloud hosting environment meets the following specifications:</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 20px 0;">
+                    <!-- Requirement 1: Backend Engine -->
+                    <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 16px;">
+                        <div style="font-weight: 700; color: #fff; font-size: 1rem; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 1.2rem;">🟢</span> Node.js Runtime
+                        </div>
+                        <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 6px;"><strong>Node.js:</strong> v18.17.0+ / v20.x LTS (Recommended) / v22.x LTS</p>
+                        <p style="font-size: 0.85rem; color: #94a3b8;">Package Manager: NPM v9+ (or PNPM / Yarn)</p>
+                    </div>
+
+                    <!-- Requirement 2: PHP Clarification -->
+                    <div style="background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 10px; padding: 16px;">
+                        <div style="font-weight: 700; color: #f87171; font-size: 1rem; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 1.2rem;">🚫</span> PHP Not Required
+                        </div>
+                        <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 6px;"><strong>PHP Version:</strong> Not Needed (0% PHP)</p>
+                        <p style="font-size: 0.85rem; color: #94a3b8;">100% Modern Next.js 15 Full-Stack React &amp; TypeScript SaaS architecture.</p>
+                    </div>
+
+                    <!-- Requirement 3: Hardware Specs -->
+                    <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 16px;">
+                        <div style="font-weight: 700; color: #fff; font-size: 1rem; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 1.2rem;">💻</span> Hardware (RAM / CPU)
+                        </div>
+                        <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 6px;"><strong>RAM:</strong> 1 GB Minimum (2 GB+ Recommended for production)</p>
+                        <p style="font-size: 0.85rem; color: #94a3b8;">CPU: 1 vCPU Minimum (2+ vCPUs Recommended)<br>Disk: 10 GB+ SSD Storage</p>
+                    </div>
+
+                    <!-- Requirement 4: Database -->
+                    <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 16px;">
+                        <div style="font-weight: 700; color: #fff; font-size: 1rem; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 1.2rem;">🍃</span> Database
+                        </div>
+                        <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 6px;"><strong>MongoDB:</strong> v5.0, v6.0, or v7.0+</p>
+                        <p style="font-size: 0.85rem; color: #94a3b8;">Supports local MongoDB or Cloud MongoDB Atlas (Free M0+ cluster compatible)</p>
+                    </div>
+
+                    <!-- Requirement 5: Process Management & Web Server -->
+                    <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 16px;">
+                        <div style="font-weight: 700; color: #fff; font-size: 1rem; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 1.2rem;">⚙️</span> Server Software
+                        </div>
+                        <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 6px;"><strong>OS:</strong> Ubuntu 20.04 / 22.04 / 24.04 LTS, Debian 11+, or Cloud cPanel with Node.js</p>
+                        <p style="font-size: 0.85rem; color: #94a3b8;">Process Manager: PM2 (<code>npm i -g pm2</code>)<br>Reverse Proxy: Nginx or Apache + SSL (Certbot)</p>
+                    </div>
+
+                    <!-- Requirement 6: Mobile Client Build Tools -->
+                    <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 16px;">
+                        <div style="font-weight: 700; color: #fff; font-size: 1rem; margin-bottom: 6px; display: flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 1.2rem;">📱</span> Android Client Build Tools
+                        </div>
+                        <p style="font-size: 0.9rem; color: #cbd5e1; margin-bottom: 6px;"><strong>IDE:</strong> Android Studio Hedgehog (2023.1.1) or newer</p>
+                        <p style="font-size: 0.85rem; color: #94a3b8;">JDK: Java 17 or Java 21 (LTS)<br>Target SDK: Android 14 (API level 34)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Step 1 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">1</div>
+                <h2 class="step-title">Create Gadohost Account & Select Plan</h2>
+            </div>
+            <div class="step-content">
+                <p>The first step is to create an account on <a href="https://gadohost.com" target="_blank" style="color:var(--cyan); text-decoration:none; font-weight:600;">Gadohost.com</a>. Gadohost provides optimized, high-performance cloud hosting suitable for deploying the Node.js API and web backend of SnapReels.</p>
+                
+                <p>Once registered, navigate to the <strong>Billing</strong> section and select the <strong>Starter Premium</strong> plan (Plan 1) as a starting point. This plan includes support for up to 3 Node.js applications, 6 databases, free SSL certificates, and 20 GB of fast NVMe storage, which is perfectly sufficient for launching your SnapReels platform.</p>
+
+                <div class="image-showcase">
+                    <img src="images/gadohost_plans.png" alt="Gadohost Billing Plans">
+                    <div class="image-caption">Select 'Starter Premium' plan on Gadohost Dashboard</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">2</div>
+                <h2 class="step-title">Access Node.js Section & Create New App</h2>
+            </div>
+            <div class="step-content">
+                <p>Once you have selected your cloud hosting tier, we need to initialize a container for our Node.js server.</p>
+                
+                <p>Follow these steps:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>From the left sidebar navigation menu, click on <strong>Node.js apps</strong> (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">1</span>).</li>
+                    <li>This will open your application dashboard. Click on the purple <strong>+ Add New App</strong> button in the top right corner (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">2</span>) or in the center card area to begin configuring your new deployment.</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/node_app_setup.png" alt="Node.js App Navigation Dashboard">
+                    <div class="image-caption">Access Node.js Apps (1) and Click Add New App (2)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">3</div>
+                <h2 class="step-title">Configure App Instance & Domain Settings</h2>
+            </div>
+            <div class="step-content">
+                <p>After clicking the <strong>+ Add New App</strong> button, a configuration modal will appear to provision your new cloud app instance.</p>
+                
+                <p>Configure the following settings carefully:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>In the <strong>APP NAME</strong> field (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">1</span>), type the name of your application (e.g., <code>snapreels</code> or <code>production-v1</code>). Spaces and dots will be converted to hyphens automatically.</li>
+                    <li>Under <strong>DOMAIN STRATEGY</strong>, select <strong>CUSTOM DOMAIN</strong>.</li>
+                    <li>In the <strong>DOMAIN ADDRESS</strong> field (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">2</span>), type your registered domain address (e.g., <code>yourdomain.com</code>).</li>
+                    <li>Click the blue <strong>Deploy instance</strong> button at the bottom to start provisioning your server.</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/gadohost_app_create.png" alt="New App Instance Modal">
+                    <div class="image-caption">Enter App Name (1) and Domain Address (2) in configuration modal</div>
+                </div>
+
+                <div style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.08) 0%, rgba(245, 158, 11, 0.03) 100%); border: 1px solid rgba(245, 158, 11, 0.2); border-radius: 12px; padding: 20px; margin-top: 20px;">
+                    <h3 style="color: #f59e0b; font-family: 'Outfit', sans-serif; font-size: 1.1rem; margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                        CRITICAL DNS NAMESERVERS SETUP
+                    </h3>
+                    <p style="margin-bottom: 0; font-size: 0.92rem; color: #d1d5db; line-height: 1.6;">
+                        <strong>IMPORTANT:</strong> For Gadohost to route your custom domain correctly, you must update the nameservers at the registrar panel where you purchased your domain (e.g., Namecheap, GoDaddy, Dynadot, Hostinger, etc.).
+                        <br><br>
+                        Log in to your domain registrar dashboard, manage your domain, find the <strong>Custom DNS / Nameservers</strong> section, and set them to:
+                        <br>
+                        <code style="display: inline-block; background-color: rgba(0,0,0,0.3); padding: 4px 8px; border-radius: 4px; margin-top: 6px; color: #f59e0b; font-weight: bold; border: 1px solid rgba(245, 158, 11, 0.15);">ns1.gadohost.com</code>
+                        <br>
+                        <code style="display: inline-block; background-color: rgba(0,0,0,0.3); padding: 4px 8px; border-radius: 4px; margin-top: 4px; color: #f59e0b; font-weight: bold; border: 1px solid rgba(245, 158, 11, 0.15);">ns2.gadohost.com</code>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">4</div>
+                <h2 class="step-title">Stop Default App Installation</h2>
+            </div>
+            <div class="step-content">
+                <p>As soon as you click the <strong>Deploy instance</strong> button, Gadohost will automatically start setting up a default node test page and installing default dependencies (indicated by the progress bar e.g. <code>Processing dependencies... 39%</code>).</p>
+                
+                <p>You must stop this default process immediately:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>Wait for the app card to appear on your dashboard.</li>
+                    <li>Click the red <strong>Stop Instance</strong> button (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">1</span>). This prevents the server from building the default template, allowing us to upload our own clean SnapReels project files in the next steps.</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/gadohost_app_stop.png" alt="Stop Default Instance">
+                    <div class="image-caption">Click 'Stop Instance' (1) to halt default template setup</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">5</div>
+                <h2 class="step-title">Access Application Management & Select MongoDB</h2>
+            </div>
+            <div class="step-content">
+                <p>After stopping the default app instance, we need to set up the MongoDB database for our SnapReels backend.</p>
+                
+                <p>Follow these steps to access the database options:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>On your stopped application card, click the purple <strong>Manage</strong> button (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">1</span>). This will expand a settings panel displaying various service controls.</li>
+                    <li>From the expanded settings row, click on the purple <strong>MONGODB</strong> icon (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">2</span>). This will navigate you to the database setup interface where we will create our database credentials.</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/gadohost_app_manage.png" alt="Manage App Settings and Select MongoDB">
+                    <div class="image-caption">Click 'Manage' (1) and select the 'MONGODB' option (2)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 6 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">6</div>
+                <h2 class="step-title">Create MongoDB Database Instance</h2>
+            </div>
+            <div class="step-content">
+                <p>Now, we will provision a new MongoDB database instance for storing SnapReels users, videos, comments, and settings.</p>
+                
+                <p>Follow these configuration steps carefully:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>On the MongoDB databases page, click the purple <strong>+ Add Database</strong> button in the top right corner of the background (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">1</span>). This will open the database creation modal.</li>
+                    <li>In the <strong>USER</strong> field (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">2</span>), type the username for your database (e.g., <code>yourusername</code> or <code>testsnapreels_test</code>).</li>
+                    <li>In the <strong>NAME</strong> field (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">3</span>), type the name of the database (e.g., <code>yourdbname</code> or <code>testsnapreels_test</code>). It is usually a good practice to keep the database name and user identical.</li>
+                    <li>Next to the <strong>PASSWORD</strong> field, click the reload/generate icon (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">4</span>) to generate a secure database password. <span style="color:#f59e0b; font-weight:600;">Make sure to copy and save this password somewhere safe!</span> We will need it shortly to configure the MongoDB connection URI in our project environment file.</li>
+                    <li>Finally, click the blue <strong>CREATE DATABASE</strong> button (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">5</span>) at the bottom to finalize and provision the database.</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/gadohost_db_create.png" alt="Create New Database Modal Settings">
+                    <div class="image-caption">Add Database (1), fill User (2) & Name (3), generate Password (4), and Create Database (5)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 7 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">7</div>
+                <h2 class="step-title">Copy MongoDB Connection URI & Navigate Back</h2>
+            </div>
+            <div class="step-content">
+                <p>Once the database is successfully created, it will appear in your Databases list. We need to copy its connection URI so that we can link our Node.js app to this database.</p>
+                
+                <p>Follow these steps:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>Locate your new database in the list and click the grey <strong>Copy URI</strong> button (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">1</span>). This will copy the MongoDB connection string to your clipboard. Save this string alongside your password, as we will use it to configure our environment variables.</li>
+                    <li>After copying the URI, navigate back to your applications list by clicking on <strong>Node.js apps</strong> in the left sidebar menu (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">2</span>).</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/gadohost_db_copy.png" alt="Copy MongoDB Connection URI and Return to Node.js apps">
+                    <div class="image-caption">Click 'Copy URI' (1) and then click 'Node.js apps' in sidebar (2)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 8 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">8</div>
+                <h2 class="step-title">Open Application Files Manager</h2>
+            </div>
+            <div class="step-content">
+                <p>With our database created and stopped application instance ready, we can now access the server's files directory to upload the SnapReels backend code.</p>
+                
+                <p>Follow these steps:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>On the applications dashboard, click the purple <strong>Manage</strong> button on your app card (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">1</span>) to expand the settings menu.</li>
+                    <li>Click on the purple <strong>FILES</strong> icon (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">2</span>) which is the first option in the row. This will open the Gadohost file manager for your Node.js application instance.</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/gadohost_app_files.png" alt="Open Application Files manager">
+                    <div class="image-caption">Click 'Manage' (1) and select the 'FILES' icon (2)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 9 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">9</div>
+                <h2 class="step-title">Delete Default Application Files</h2>
+            </div>
+            <div class="step-content">
+                <p>When you first open your application's file manager, you will notice a few default boilerplate files and folders (such as <code>index.js</code>, <code>package.json</code>, etc.). We need to delete these files to ensure a clean workspace before uploading our project files.</p>
+                
+                <p>Follow these steps to clean the directory:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>Check the <strong>Select All</strong> checkbox in the table header next to "IDENTITY" (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">1</span>). This will select all the default files in the folder.</li>
+                    <li>With the files selected, a purple batch operation toolbar will appear. Click the red <strong>DELETE</strong> button in this toolbar (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">2</span>) and confirm the deletion.</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/gadohost_files_delete.png" alt="Delete Default Files">
+                    <div class="image-caption">Check 'Select All' (1) and click 'DELETE' (2) to clear default files</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 10 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">10</div>
+                <h2 class="step-title">Create New Environment File</h2>
+            </div>
+            <div class="step-content">
+                <p>Now that our file manager is clean, we need to create a new environment variable file (<code>.env</code>) to hold our database credentials and configuration keys.</p>
+                
+                <p>Follow these steps to initialize the file creation:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>Click the blue <strong>+ CREATE NEW</strong> button at the top right of the file manager header (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">1</span>). This will expand a dropdown menu.</li>
+                    <li>From the dropdown menu, select <strong>New binary file</strong> (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">2</span>).</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/gadohost_file_create.png" alt="Create New File Dropdown">
+                    <div class="image-caption">Click '+ CREATE NEW' (1) and select 'New binary file' (2)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 11 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">11</div>
+                <h2 class="step-title">Name Environment File & Deploy</h2>
+            </div>
+            <div class="step-content">
+                <p>After clicking <strong>New binary file</strong>, a modal will prompt you to enter the name of the new file.</p>
+                
+                <p>Follow these steps to deploy the file:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>In the <strong>LABEL</strong> text box (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">1</span>), type exactly: <code>.env</code> (make sure to include the leading dot).</li>
+                    <li>Click the blue <strong>DEPLOY</strong> button (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">2</span>) to create the file in your server root directory.</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/gadohost_env_deploy.png" alt="Name File and Deploy">
+                    <div class="image-caption">Type '.env' in LABEL box (1) and click 'DEPLOY' (2)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 12 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">12</div>
+                <h2 class="step-title">Open Environment File for Editing</h2>
+            </div>
+            <div class="step-content">
+                <p>Now that the <code>.env</code> file is created, you need to open it and configure the database connection.</p>
+                
+                <p>Follow these steps to edit the file:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>Click the <strong>three dots (...)</strong> on the right side of the <code>.env</code> file row (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">1</span>).</li>
+                    <li>Select the <strong>Edit Code</strong> option from the dropdown menu (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">2</span>).</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/gadohost_env_options.png" alt="Edit Code Option">
+                    <div class="image-caption">Click the three dots (1) and select 'Edit Code' (2)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 13 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">13</div>
+                <h2 class="step-title">Configure Environment Variables & Save</h2>
+            </div>
+            <div class="step-content">
+                <p>Paste the following environment variables template inside the file editor:</p>
+                
+                <div style="background: #18181b; border: 1px solid #27272a; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-family: monospace; font-size: 14px; position: relative;">
+                    <pre style="margin: 0; color: #f4f4f5; white-space: pre-wrap; word-break: break-all;">DEMO_MODE=false
+MONGODB_URI=</pre>
+                    <button onclick="navigator.clipboard.writeText('DEMO_MODE=false\nMONGODB_URI='); alert('Code copied to clipboard!')" style="position: absolute; right: 12px; top: 12px; background: #27272a; border: 1px solid #3f3f46; color: #f4f4f5; border-radius: 4px; padding: 4px 8px; font-size: 12px; cursor: pointer; transition: background 0.2s;" onmouseover="this.style.background='#3f3f46'" onmouseout="this.style.background='#27272a'">Copy</button>
+                </div>
+
+                <p>Follow these steps to configure and save:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>Paste the copied template. In the <code>MONGODB_URI</code> field (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">1</span>), paste the MongoDB Connection URI that you copied in <strong>Step 7</strong>. Make sure it looks like <code>MONGODB_URI=mongodb://...</code>.</li>
+                    <li>Click the blue <strong>Save File</strong> button in the top-right corner (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">2</span>) to save your configurations.</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/gadohost_env_edit.png" alt="Configure .env and Save">
+                    <div class="image-caption">Paste variables & MongoDB connection string (1) and click 'Save File' (2)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 14 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">14</div>
+                <h2 class="step-title">Upload Website Code Archive</h2>
+            </div>
+            <div class="step-content">
+                <p>Now, you need to upload the website project code archive to your Gadohost Cloud Storage.</p>
+                
+                <p>Follow these steps to upload the file:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>Click the grey <strong>UPLOAD</strong> button located at the top-right corner of the Cloud Storage interface (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">1</span>).</li>
+                    <li>In the system file dialog that pops up, select the website zip package: <strong>snapreels-WebSite-v1.0.2</strong> (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">2</span>).</li>
+                    <li>Click the <strong>Open</strong> button at the bottom of the file dialog (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">3</span>) to start uploading the archive.</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/gadohost_upload_zip.png" alt="Upload Website Zip File">
+                    <div class="image-caption">Click 'UPLOAD' (1), select the website zip package (2), and click 'Open' (3)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 15 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">15</div>
+                <h2 class="step-title">Extract Website Code Archive</h2>
+            </div>
+            <div class="step-content">
+                <p>Once the upload is complete, you need to extract the website code files into your server root directory.</p>
+                
+                <p>Follow these steps to extract the archive:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>Click the <strong>three dots (...)</strong> on the right side of the <code>snapreels-WebSite-v1.0.2.zip</code> file row (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">1</span>).</li>
+                    <li>Select the yellow <strong>Extract All</strong> option from the dropdown menu (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">2</span>).</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/gadohost_zip_extract.png" alt="Extract Zip File Options">
+                    <div class="image-caption">Click the three dots (1) and select 'Extract All' (2)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 16 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">16</div>
+                <h2 class="step-title">Configure SSL Certificate</h2>
+            </div>
+            <div class="step-content">
+                <p>To secure your application with HTTPS, you need to configure an SSL certificate for your domain.</p>
+                
+                <p>Follow these steps to access SSL configuration:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>Navigate to the <strong>Node.js apps</strong> section in the sidebar menu (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">1</span>).</li>
+                    <li>On your app instance card, click the purple <strong>Manage</strong> button (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">2</span>) to open the control options.</li>
+                    <li>Click the green <strong>SSL</strong> button in the bottom grid (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">3</span>) to start generating or installing your SSL certificate.</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/gadohost_ssl_manage.png" alt="Navigate to SSL Settings">
+                    <div class="image-caption">Select 'Node.js apps' (1), click 'Manage' (2), and click 'SSL' (3)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 17 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">17</div>
+                <h2 class="step-title">Verify Name Servers & Generate Free SSL</h2>
+            </div>
+            <div class="step-content">
+                <p>Before generating the free SSL certificate, you must ensure that your custom domain has been configured with the correct Gadohost name servers:</p>
+                
+                <div style="background: #18181b; border: 1px solid #27272a; border-radius: 8px; padding: 12px 16px; margin-bottom: 16px; font-family: monospace; font-size: 14px;">
+                    <ul style="margin: 0; padding-left: 20px; color: #f4f4f5; display: flex; flex-direction: column; gap: 6px;">
+                        <li>ns1.gadohost.com</li>
+                        <li>ns2.gadohost.com</li>
+                    </ul>
+                </div>
+
+                <p>Follow these steps to generate your SSL certificate:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>Locate your custom domain in the list (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">1</span>) and verify that it matches your app instance. Make sure the status badge shows yellow <strong>Pending</strong> (indicating the nameservers are pointed correctly).</li>
+                    <li>Click the blue <strong>Generate SSL</strong> button on the right side of the domain card (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">2</span>) to request and apply your free Let's Encrypt SSL certificate.</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/gadohost_ssl_generate.png" alt="Generate Free SSL Certificate">
+                    <div class="image-caption">Verify domain (1) and click 'Generate SSL' (2)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 18 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">18</div>
+                <h2 class="step-title">Re-launch Application</h2>
+            </div>
+            <div class="step-content">
+                <p>After setting up the environment variables and the SSL certificate, you need to restart the application instance to apply the changes.</p>
+                
+                <p>Follow these steps to re-launch:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>Go to the <strong>Node.js apps</strong> section in the sidebar menu (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">1</span>).</li>
+                    <li>Click the blue <strong>Re-launch</strong> button on your app card (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">2</span>).</li>
+                    <li><strong>Wait about 5 minutes</strong> for the installation and build process to complete. You will see a progress bar indicating the status.</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/gadohost_relaunch.png" alt="Re-launch Application">
+                    <div class="image-caption">Select 'Node.js apps' (1) and click 'Re-launch' (2)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 19 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">19</div>
+                <h2 class="step-title">Setup Successful & Preview Live Site</h2>
+            </div>
+            <div class="step-content">
+                <p>Once the build process is complete, the application status will change to indicate it is running successfully.</p>
+                
+                <p>Follow these final steps:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>Verify that the status badge at the top of the card shows green <strong>Ready</strong> (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">1</span>). Congratulations! The installation was successful.</li>
+                    <li>Click the <strong>LIVE SITE PREVIEW</strong> link at the bottom of the card (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">2</span>) to open and test your live website immediately!</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/gadohost_ready.png" alt="Setup Complete and Live Site Preview">
+                    <div class="image-caption">Confirm status 'Ready' (1) and click 'LIVE SITE PREVIEW' (2)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 20 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">20</div>
+                <h2 class="step-title">Setup Step 1: Database Connection</h2>
+            </div>
+            <div class="step-content">
+                <p>When you open your website for the first time, you will be greeted by the SnapReels Platform Initialization Wizard. The first step is to test your MongoDB connection.</p>
+                
+                <p>Follow these steps:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>Click the red <strong>Test Connection</strong> button (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">1</span>) to verify that your website can connect to your MongoDB database successfully.</li>
+                    <li>Once you see the green success message "Connection to MongoDB established successfully!", click the pink <strong>Next: Initialize Data</strong> button at the bottom (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">2</span>).</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/setup_step1.png" alt="Test Database Connection">
+                    <div class="image-caption">Click 'Test Connection' (1) and select 'Next: Initialize Data' (2)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 21 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">21</div>
+                <h2 class="step-title">Setup Step 2: Database Initialization</h2>
+            </div>
+            <div class="step-content">
+                <p>In this step, we will populate the database with default settings, categories, and languages required for SnapReels to function.</p>
+                
+                <p>Follow these steps:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>Click the orange <strong>Start Auto-Initialization</strong> button (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">1</span>) to automatically create essential tables and insert initial data.</li>
+                    <li>Wait for the database installation process to finish. Once completed, click the pink <strong>Next: Site Config</strong> button at the bottom (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">2</span>) to proceed.</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/setup_step2.png" alt="Database Initialization">
+                    <div class="image-caption">Click 'Start Auto-Initialization' (1) and then 'Next: Site Config' (2)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 22 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">22</div>
+                <h2 class="step-title">Setup Step 3: Website Details</h2>
+            </div>
+            <div class="step-content">
+                <p>Now configure the basic branding and domain configuration for your streaming platform.</p>
+                
+                <p>Follow these steps:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>Enter your desired website title in the <strong>Site Name</strong> field (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">1</span>).</li>
+                    <li>Enter the primary URL (domain) of your website in the <strong>Primary URL (Domain)</strong> field (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">2</span>), make sure it is exactly your domain.</li>
+                    <li>Click the pink <strong>Save & Continue</strong> button (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">3</span>) to save these details.</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/setup_step3.png" alt="Website Details Configuration">
+                    <div class="image-caption">Enter Site Name (1), Primary URL (2), and click 'Save & Continue' (3)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 23 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">23</div>
+                <h2 class="step-title">Setup Step 4: Create Administrator</h2>
+            </div>
+            <div class="step-content">
+                <p>Set up the administrator credentials to access your dashboard and manage the streaming platform.</p>
+                
+                <p>Follow these steps:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>Enter your desired administrator username in the <strong>Admin Username</strong> field (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">1</span>).</li>
+                    <li>Enter your email address in the <strong>Admin Email</strong> field (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">2</span>).</li>
+                    <li>Enter a secure password in the <strong>Admin Password</strong> field (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">3</span>).</li>
+                    <li>Click the pink <strong>Finalize & Install</strong> button (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">4</span>) to complete the installation.</li>
+                </ol>
+
+                <p style="color: #22c55e; font-weight: bold; margin-top: 16px;">Congratulations! Setup is complete. Now go to your admin link /admin to manage your site.</p>
+
+                <div class="image-showcase">
+                    <img src="images/setup_step4.png" alt="Create Administrator Credentials">
+                    <div class="image-caption">Fill in Username (1), Email (2), Password (3), and click 'Finalize & Install' (4)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 24 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">24</div>
+                <h2 class="step-title">Setup Step 5: Admin Panel Login</h2>
+            </div>
+            <div class="step-content">
+                <p>Access your admin panel dashboard to configure and customize your streaming platform.</p>
+                
+                <p>Follow these steps:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>Enter the administrator <strong>Username</strong> you created in the previous step (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">1</span>).</li>
+                    <li>Enter the administrator <strong>Password</strong> (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">2</span>).</li>
+                    <li>Click the pink <strong>Sign In</strong> button (Indicated by arrow <span style="color:#ef4444; font-weight:bold;">3</span>) to log into the Admin Panel.</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/setup_step5.png" alt="Admin Panel Login">
+                    <div class="image-caption">Enter Username (1), Password (2), and click 'Sign In' (3)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Firebase Setup Divider -->
+        <div style="margin: 40px 0 20px 0; border-top: 1px solid var(--border-color); padding-top: 40px;">
+            <div class="badge primary" style="background-color: var(--cyan-glow); color: #22d3ee; border-color: rgba(6, 182, 212, 0.2);">Authentication & DB</div>
+            <h2 style="font-size: 2rem; margin-top: 8px; margin-bottom: 8px; color: #ffffff;">Firebase Configuration Setup</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 30px;">Follow these steps to configure your Firebase Project for social authentication and server communications.</p>
+        </div>
+
+        <!-- Step 25 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">25</div>
+                <h2 class="step-title">Create a Project at Firebase Console</h2>
+            </div>
+            <div class="step-content">
+                <p>To initialize Firebase services for your website, you must create a new project in the Google Firebase developer portal.</p>
+                
+                <p>Follow these steps:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>Navigate to the <a href="https://console.firebase.google.com/" target="_blank" style="color:var(--cyan); text-decoration:none; font-weight:600;">Firebase Console</a>.</li>
+                    <li>Click the card <strong>Get started with a Firebase project</strong> or <strong>Create a project</strong> (Indicated by the red highlight).</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/firebase01.png" alt="Get Started with Firebase Project">
+                    <div class="image-caption">Access Firebase Console and click Create a project</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 26 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">26</div>
+                <h2 class="step-title">Enter Project Name & Accept Terms</h2>
+            </div>
+            <div class="step-content">
+                <p>Choose a name for your Firebase project to distinguish it in your developer dashboard.</p>
+                
+                <p>Follow these steps:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>In the <strong>Enter your project name</strong> field (Indicated by arrow), type your desired project name (e.g., <code>SnapReels</code>).</li>
+                    <li>Check both checkboxes (Indicated by the red boxes) to accept the Firebase Terms and confirm your business use.</li>
+                    <li>Click the <strong>Continue</strong> button at the bottom (Indicated by arrow).</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/firebase02.png" alt="Enter Project Name">
+                    <div class="image-caption">Enter your project name, check terms, and click Continue</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 27 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">27</div>
+                <h2 class="step-title">Configure Google Analytics Settings</h2>
+            </div>
+            <div class="step-content">
+                <p>Configure Google Analytics settings for your project to track user interactions and metrics.</p>
+                
+                <p>Follow these steps:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>Verify your <strong>Analytics location</strong> (Indicated by the box).</li>
+                    <li>Check the Google Analytics terms checkboxes at the bottom (Indicated by the box).</li>
+                    <li>Click the <strong>Create project</strong> button (Indicated by arrow) to initiate the workspace provisioning.</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/firebase03.png" alt="Google Analytics Setup">
+                    <div class="image-caption">Select location, accept terms, and click Create project</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 28 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">28</div>
+                <h2 class="step-title">Review Project Setup Options</h2>
+            </div>
+            <div class="step-content">
+                <p>Proceed through the AI Assistance recommendations during the project initialization.</p>
+                
+                <p>Follow these steps:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>Review the optional AI assistance features in your Firebase project.</li>
+                    <li>Click the blue <strong>Continue</strong> button at the bottom (Indicated by the box and arrow).</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/firebase04.png" alt="AI Assistance & Setup Options">
+                    <div class="image-caption">Click Continue to proceed to project creation</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 29 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">29</div>
+                <h2 class="step-title">Project Creation Complete</h2>
+            </div>
+            <div class="step-content">
+                <p>Wait for Firebase to finish provisioning resources for your new cloud project workspace.</p>
+                
+                <p>Follow these steps:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>Once you see the green success message <strong>Your Firebase project is ready</strong>, click the blue <strong>Continue</strong> button to enter your project console dashboard.</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/firebase05.png" alt="Project Ready Screen">
+                    <div class="image-caption">Click Continue once the project is successfully created</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 30 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">30</div>
+                <h2 class="step-title">Register Web Application Instance</h2>
+            </div>
+            <div class="step-content">
+                <p>To link your live website domain with Firebase, you must create a Web application instance within your project settings dashboard.</p>
+                
+                <p>Follow these steps:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>On your Firebase project overview dashboard page, click the circular <strong>Web (&lt;/&gt;)</strong> icon (Indicated by the red box and arrow) to register your new web client app.</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/firebase06.png" alt="Create Web Project Icon">
+                    <div class="image-caption">Click the Web icon (</>) to create a new Web project application</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 31 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">31</div>
+                <h2 class="step-title">Configure Web App Name</h2>
+            </div>
+            <div class="step-content">
+                <p>Assign an identifier name to your web application registration.</p>
+                
+                <p>Follow these steps:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>In the <strong>App nickname</strong> text field (Indicated by the red box), type a name for your web app configuration (e.g., <code>SnapReels Web</code>).</li>
+                    <li>Click the blue <strong>Register app</strong> button (Indicated by the arrow).</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/firebase07.png" alt="Register Web App Name">
+                    <div class="image-caption">Type your App nickname and click Register app</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 32 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">32</div>
+                <h2 class="step-title">Copy Firebase Configuration Object</h2>
+            </div>
+            <div class="step-content">
+                <p>Firebase will generate a configuration keys object. This object connects your web pages to Firebase servers.</p>
+                
+                <p>Follow these steps:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>Locate the <code>const firebaseConfig</code> block inside the script tag (Indicated by the red box).</li>
+                    <li>Copy this JavaScript config object block (from <code>apiKey</code> to <code>measurementId</code>).</li>
+                    <li><strong>Save this copied object safely in a local file</strong> on your machine, as we will paste these values into our website configuration panel.</li>
+                    <li>Click the blue <strong>Continue to console</strong> button at the bottom.</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/firebasekeys.png" alt="Firebase Configuration Keys Object">
+                    <div class="image-caption">Copy the firebaseConfig object details and save them locally</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 33 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">33</div>
+                <h2 class="step-title">Access Project Settings Console</h2>
+            </div>
+            <div class="step-content">
+                <p>Configure project settings, keys, and security parameters in the management settings page.</p>
+                
+                <p>Follow these steps:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>Click the gear settings icon next to "Project Overview" in the left sidebar menu (Indicated by the red box and arrow).</li>
+                    <li>Select <strong>Project settings</strong> from the menu options to load the settings dashboard.</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/firebase08.png" alt="Access Project Settings">
+                    <div class="image-caption">Click the settings gear icon and go to Project Settings</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 34 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">34</div>
+                <h2 class="step-title">Access Authentication Configuration</h2>
+            </div>
+            <div class="step-content">
+                <p>Enable secure user login options (like Google, Facebook, etc.) inside the Authentication dashboard.</p>
+                
+                <p>Follow these steps:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>In the left sidebar menu under the "Build" category, click on <strong>Authentication</strong> (Indicated by the red box and arrow).</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/firebase09.png" alt="Access Authentication Tab">
+                    <div class="image-caption">Select Authentication from Build sidebar menu</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 35 -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">35</div>
+                <h2 class="step-title">Authorize Website Domain Name</h2>
+            </div>
+            <div class="step-content">
+                <p>For Firebase authentication scripts to run securely on your custom domain name, you must authorize it in your project settings.</p>
+                
+                <p>Follow these steps:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>Go to the <strong>Settings</strong> tab in the Authentication dashboard.</li>
+                    <li>Scroll down to <strong>Authorized domains</strong>.</li>
+                    <li>Click the <strong>Add domain</strong> button.</li>
+                    <li>Enter your custom domain address (e.g., <code>yourdomain.com</code>) (Indicated by the red box and arrow).</li>
+                    <li>Click the blue <strong>Add</strong> button to save changes and authorize your website domain.</li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/firebase10.png" alt="Add Authorized Domain in Firebase Settings">
+                    <div class="image-caption">Authorize your website domain name in Authorized domains list</div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

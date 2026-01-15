@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SnapReels Android App Setup</title>
+    <!-- Import Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #080b11;
+            --card-bg: #0f1524;
+            --sidebar-bg: #0c101a;
+            --border-color: rgba(255, 255, 255, 0.06);
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.15);
+            --cyan: #06b6d4;
+            --cyan-glow: rgba(6, 182, 212, 0.15);
+            --emerald: #10b981;
+            --emerald-glow: rgba(16, 185, 129, 0.15);
+            --amber: #f59e0b;
+            --amber-glow: rgba(245, 158, 11, 0.15);
+            --accent-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #06b6d4 100%);
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        /* Sidebar Navigation */
+        aside {
+            width: 280px;
+            min-width: 280px;
+            flex-shrink: 0;
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 50;
+            padding: 24px;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo-icon {
+            width: 38px;
+            height: 38px;
+            background: var(--accent-gradient);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: white;
+            font-family: 'Outfit', sans-serif;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .logo-text {
+            font-size: 1.25rem;
+            background: linear-gradient(to right, #ffffff, #9ca3af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-grow: 1;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-secondary);
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: left;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: var(--transition-smooth);
+            width: 100%;
+            text-decoration: none;
+        }
+
+        .nav-btn:hover {
+            color: var(--text-primary);
+            background-color: rgba(255, 255, 255, 0.03);
+        }
+
+        .nav-btn.active {
+            color: #ffffff;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(168, 85, 247, 0.1) 100%);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.05);
+        }
+
+        .nav-btn svg {
+            transition: var(--transition-smooth);
+        }
+
+        .nav-btn.active svg {
+            transform: scale(1.1);
+            color: #a855f7;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .support-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.08) 0%, rgba(6, 182, 212, 0.05) 100%);
+            border: 1px solid rgba(99, 102, 241, 0.15);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .support-card p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .support-links {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .support-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: var(--transition-smooth);
+        }
+
+        .support-link.whatsapp {
+            background-color: #25d366;
+            color: black;
+        }
+
+        .support-link.whatsapp:hover {
+            box-shadow: 0 0 15px rgba(37, 211, 102, 0.4);
+        }
+
+        .support-link.email {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .support-link.email:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Main Content Area */
+        main {
+            flex: 1 1 0%;
+            min-width: 0;
+            padding: 40px;
+            max-width: 1200px;
+            transition: var(--transition-smooth);
+        }
+
+        header {
+            margin-bottom: 40px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 16px;
+        }
+
+        .badge.primary {
+            background-color: var(--primary-glow);
+            color: #818cf8;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #ffffff 0%, #9ca3af 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 800px;
+        }
+
+        /* Step Card Styling */
+        .step-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            position: relative;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+            transition: var(--transition-smooth);
+        }
+
+        .step-card:hover {
+            border-color: rgba(99, 102, 241, 0.2);
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.03);
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .step-number {
+            width: 36px;
+            height: 36px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            font-size: 1.1rem;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+        }
+
+        .step-title {
+            font-size: 1.4rem;
+            color: #ffffff;
+        }
+
+        .step-content {
+            color: var(--text-secondary);
+            font-size: 0.98rem;
+        }
+
+        .step-content p {
+            margin-bottom: 16px;
+        }
+
+        /* Code Block Container */
+        .code-container {
+            position: relative;
+            background-color: #05070c;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin: 16px 0;
+            overflow: hidden;
+        }
+
+        .code-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 16px;
+            background-color: rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid var(--border-color);
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .code-body {
+            padding: 16px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+            color: #38bdf8;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        .copy-btn {
+            background-color: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition-smooth);
+        }
+
+        .copy-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .copy-btn.copied {
+            background-color: var(--emerald-glow);
+            border-color: rgba(16, 185, 129, 0.3);
+            color: #34d399;
+        }
+
+        /* Callout Box styling */
+        .callout {
+            padding: 18px;
+            border-radius: 12px;
+            margin: 20px 0;
+            display: flex;
+            gap: 16px;
+        }
+
+        .callout.info {
+            background-color: var(--cyan-glow);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            color: #22d3ee;
+        }
+
+        .callout.warning {
+            background-color: var(--amber-glow);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            color: #fbbf24;
+        }
+
+        .callout.success {
+            background-color: var(--emerald-glow);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            color: #34d399;
+        }
+
+        .callout-icon {
+            font-size: 1.3rem;
+            flex-shrink: 0;
+        }
+
+        .callout-body h4 {
+            margin-bottom: 6px;
+            color: white;
+        }
+
+        /* Image Display Grid */
+        .image-showcase {
+            margin: 24px 0;
+            background-color: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .image-showcase img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            transition: var(--transition-smooth);
+            border: 1px solid var(--border-color);
+        }
+
+        .image-showcase img:hover {
+            transform: scale(1.01);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .image-caption {
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-family: 'Outfit', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Code highlight helpers */
+        .token-keyword { color: #f472b6; }
+        .token-string { color: #34d399; }
+        .token-comment { color: #6b7280; font-style: italic; }
+        .token-function { color: #60a5fa; }
+
+        /* Responsive Layout */
+        @media (max-width: 1024px) {
+            body {
+                flex-direction: column;
+            }
+            aside {
+                width: 100%;
+                min-width: 100%;
+                height: auto;
+                position: static;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+                padding: 20px;
+                overflow-y: visible;
+            }
+            .logo-area {
+                margin-bottom: 20px;
+            }
+            .nav-menu {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            .nav-btn {
+                width: auto;
+                flex: 1 1 calc(50% - 8px);
+                justify-content: center;
+            }
+            .sidebar-footer {
+                display: none;
+            }
+            main {
+                width: 100%;
+                padding: 24px 16px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .nav-btn {
+                flex: 1 1 100%;
+            }
+            header h1 {
+                font-size: 2rem;
+            }
+            .step-card {
+                padding: 20px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <aside>
+        <div class="logo-area">
+            <img src="images/logo.png" alt="SnapReels Logo" style="width: 38px; height: 38px; border-radius: 10px; object-fit: cover; box-shadow: 0 4px 20px rgba(239, 68, 68, 0.4);">
+            <div class="logo-text">SnapReels Panel</div>
+        </div>
+
+        <nav class="nav-menu">
+            <a href="index.html" class="nav-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" /></svg>
+                Hosting Web Setup
+            </a>
+            <a href="vps.html" class="nav-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
+                VPS Web Setup
+            </a>
+            <a href="android.html" class="nav-btn active">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
+                Android App Setup
+            </a>
+            <a href="admin_guide.html" class="nav-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                Admin Panel Guide
+            </a>
+            <a href="upgrade.html" class="nav-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" /></svg>
+                Upgrade Guide
+            </a>
+            <a href="faq.html" class="nav-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                FAQ & Troubleshooting
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="support-card">
+                <p>Need Technical Help?</p>
+                <div class="support-links">
+                    <a href="https://wa.me/212724328337" target="_blank" class="support-link whatsapp">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.977h.004c4.368 0 7.926-3.559 7.93-7.934A7.897 7.897 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.69-4.98c-.202-.101-1.194-.59-1.378-.656-.185-.067-.32-.1-.455.1-.134.2-.52.656-.637.79-.116.135-.234.15-.435.05-.201-.1-.85-.314-1.62-.999-.598-.534-1.003-1.196-1.121-1.396-.118-.2-.012-.307.088-.407.09-.09.201-.235.302-.353.1-.117.133-.2.201-.336.069-.135.034-.253-.017-.354-.052-.102-.455-1.099-.623-1.503-.164-.397-.32-.343-.455-.35-.127-.007-.274-.007-.422-.007-.148 0-.389.055-.593.278-.204.223-.78.762-.78 1.857 0 1.094.797 2.15 1.083 2.531.286.381 1.567 2.393 3.799 3.359.53.23 0 .43.9.725.22.072.483.18.663.2.18.02.66-.27 1.14-.665.48-.395.48-.665.36-.885-.12-.22-.389-.355-.59-.456z"/>
+                        </svg>
+                        WhatsApp Support
+                    </a>
+                    <a href="mailto:businessboussetta@gmail.com" class="support-link email">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z"/>
+                        </svg>
+                        Email Support
+                    </a>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main>
+        
+        <header>
+            <span class="badge primary">Mobile Platform</span>
+            <h1>Android App Setup</h1>
+            <p>Compile, configure, and publish your native Kotlin Android application to the Google Play Store.</p>
+        </header>
+
+        <div class="step-card">
+            
+            <div class="step-header">
+                <div class="step-number">O</div>
+                <h2 class="step-title">App Feature & Screen Overview</h2>
+            </div>
+            <div class="step-content">
+                <p>Before you begin the technical setup, here is a visual overview of the SnapReels Android Application.</p>
+                <div style="display: flex; gap: 15px; overflow-x: auto; padding-bottom: 15px; margin-top: 15px;">
+                    <img src="images/screenshots/1.jpg" style="height: 400px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                    <img src="images/screenshots/3.jpg" style="height: 400px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                    <img src="images/screenshots/8.jpg" style="height: 400px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                    <img src="images/screenshots/9.jpg" style="height: 400px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+					<img src="images/screenshots/10.jpg" style="height: 400px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                </div>
+            </div>
+            <div class="step-header">
+                <div class="step-number">A</div>
+                <h2 class="step-title">Architecture Overview (For Developers)</h2>
+            </div>
+            <div class="step-content">
+                <p>The Android Application is built entirely in <strong>Kotlin</strong> and utilizes modern Jetpack Compose for UI rendering.</p>
+                <ul>
+                    <li><strong>Architecture:</strong> MVVM (Model-View-ViewModel) enforcing strict separation of concerns.</li>
+                    <li><strong>Networking:</strong> Retrofit2 with OkHttp for optimized REST API communication.</li>
+                    <li><strong>Dependency Injection:</strong> Hilt / Dagger for managing scoped dependencies and ViewModels.</li>
+                    <li><strong>Media:</strong> Google Media3 (ExoPlayer) with VideoCacheManager for disk-backed pre-buffering.</li>
+                    <li><strong>Navigation:</strong> Jetpack Navigation Compose with deep link support.</li>
+                    <li><strong>Storage:</strong> DataStore (Preferences) for async key-value persistence.</li>
+                </ul>
+            </div>
+        </div>
+
+
+        <!-- Step 1: Logo -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">1</div>
+                <h2 class="step-title">Change the Application Logo</h2>
+            </div>
+            <div class="step-content">
+                <p>To replace the default launcher icon and visual branding logo inside the app:</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>Design a custom square logo (PNG format, recommended size <code>512x512</code> px).</li>
+                    <li>Rename the file to <strong><code>app_logo.png</code></strong>.</li>
+                    <li>Paste and overwrite the logo file inside the directory:
+                        <br><code style="color:#f472b6;">Android App/app/src/main/res/drawable/app_logo.png</code>
+                    </li>
+                    <li>The app main manifest automatically links to this resource using standard tags:
+                        <br><code>android:icon="@drawable/app_logo"</code>
+                    </li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/logo_change.png" alt="Logo Change Location Diagram">
+                    <div class="image-caption">Replacement structure of drawable assets</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: Package Name -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">2</div>
+                <h2 class="step-title">Change Package Name (Application ID)</h2>
+            </div>
+            <div class="step-content">
+                <p>The Application ID acts as the unique identifier for your app on the Google Play Store. It is configured in the application-level Gradle settings:</p>
+                
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>Open the file: <code style="color:#f472b6;">Android App/app/build.gradle.kts</code></li>
+                    <li>Locate the <code>applicationId</code> line inside <code>defaultConfig</code>:</li>
+                </ol>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>build.gradle.kts (Lines 14-22)</span>
+                        <button class="copy-btn" onclick="copyCode(this, 'gradle-code')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" /></svg>
+                            Copy
+                        </button>
+                    </div>
+                    <div class="code-body" id="gradle-code"><span class="token-keyword">defaultConfig</span> {
+    <span class="token-keyword">applicationId</span> = <span class="token-string">"com.snapreels.devsnaplix"</span> <span class="token-comment">// Replace with your unique package name</span>
+    <span class="token-keyword">minSdk</span> = 24
+    <span class="token-keyword">targetSdk</span> = 36
+    <span class="token-keyword">versionCode</span> = 1
+    <span class="token-keyword">versionName</span> = <span class="token-string">"1.0.0"</span>
+}</div>
+                </div>
+
+                <p>3. Update the package name string to your custom store package ID (e.g. <code>"com.yourname.snapreels"</code>).</p>
+                <p>4. To refactor package structures inside Android Studio: Select target Java packages directory folders, right click and choose <strong>Refactor -> Rename -> Rename Package</strong>.</p>
+
+                <div class="image-showcase">
+                    <img src="images/package_name_change.png" alt="Package Renaming Process">
+                    <div class="image-caption">Locating Application ID inside Gradle Configs</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3: Firebase -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">3</div>
+                <h2 class="step-title">Configure Firebase Console & Setup file</h2>
+            </div>
+            <div class="step-content">
+                <p>To enable authentication, login mechanisms, and notifications, you must link Firebase Services:</p>
+                
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>Go to the <a href="https://console.firebase.google.com/" target="_blank" style="color:var(--cyan); text-decoration:none; font-weight:600;">Firebase Console</a> and add a new Android Project.</li>
+                    <li>Enter the exact package name (Application ID) configured in Step 2.</li>
+                    <li>Register the app and download the configuration file: <strong><code>google-services.json</code></strong>.</li>
+                    <li>Drag and paste the downloaded file directly inside your app folder:
+                        <br><code style="color:#f472b6;">Android App/app/google-services.json</code>
+                    </li>
+                </ol>
+
+                <div class="image-showcase">
+                    <img src="images/firebase_setup.png" alt="Firebase Configuration File Location">
+                    <div class="image-caption">Placing google-services.json inside the app module directory</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 4: API Endpoint -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">4</div>
+                <h2 class="step-title">Configure API URL & Security Keys</h2>
+            </div>
+            <div class="step-content">
+                <p>The Android app interacts securely with your SnapReels web server via REST API endpoints. You must configure your server domain and unique API security key:</p>
+
+                <!-- Admin Panel Key Retrieval Guide Callout -->
+                <div style="background: rgba(229, 9, 20, 0.08); border-left: 4px solid #E50914; border-radius: 8px; padding: 18px 20px; margin: 18px 0;">
+                    <div style="font-weight: 700; color: #fff; font-size: 1.05rem; display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                        <span style="font-size: 1.2rem;">🔑</span> Where to find your API URL and Secret Key in the Admin Panel:
+                    </div>
+                    <ol style="margin-left: 20px; color: #cbd5e1; font-size: 0.95rem; line-height: 1.6; display: flex; flex-direction: column; gap: 6px;">
+                        <li>Log in to your <strong>SnapReels Admin Dashboard</strong> (e.g. <code>https://yourdomain.com/admin</code>).</li>
+                        <li>In the left sidebar menu, click on <strong>Settings</strong> (⚙️).</li>
+                        <li>Select the <strong>Mobile App</strong> tab at the top.</li>
+                        <li>Scroll down to the <strong>API Connection</strong> card:
+                            <ul style="margin-top: 4px; margin-left: 20px; list-style-type: disc;">
+                                <li><strong>API Base URL:</strong> Copy the full endpoint URL displayed (e.g., <code>https://yourdomain.com/api/mobile/v1</code>).</li>
+                                <li><strong>API Access Key:</strong> Copy your secret API key. You can also click the 🔄 <strong>Generate</strong> button at any time to regenerate a new secure 256-bit API token.</li>
+                            </ul>
+                        </li>
+                        <li>Keep this window open or copy the values to paste into your Android project.</li>
+                    </ol>
+                </div>
+
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>In Android Studio, open the file: <code style="color:#f472b6;">Android App/app/src/main/java/com/example/data/AppConfig.kt</code></li>
+                    <li>Replace the placeholder values with your actual server domain and API key:</li>
+                </ol>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>AppConfig.kt</span>
+                        <button class="copy-btn" onclick="copyCode(this, 'app-config-code')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" /></svg>
+                            Copy
+                        </button>
+                    </div>
+                    <div class="code-body" id="app-config-code"><span class="token-keyword">package</span> com.example.data
+
+<span class="token-keyword">object</span> AppConfig {
+    <span class="token-comment">// 1. Replace with your actual domain URL (ending with /api/mobile/v1)</span>
+    <span class="token-keyword">const val</span> API_URL = <span class="token-string">"https://YOUR_DOMAIN_HERE.com/api/mobile/v1"</span>
+    
+    <span class="token-comment">// 2. Replace with your secret API key from Admin Panel -> Settings -> Mobile App</span>
+    <span class="token-keyword">const val</span> API_KEY = <span class="token-string">"YOUR_API_KEY_HERE"</span>
+}</div>
+                </div>
+
+                <div class="image-showcase">
+                    <img src="images/api_setup.png" alt="API endpoint customization">
+                    <div class="image-caption">Locating and editing API Server values in AppConfig.kt</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 5: AdMob Ads -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">5</div>
+                <h2 class="step-title">Configure Google AdMob Ads</h2>
+            </div>
+            <div class="step-content">
+                <p>To display advertisements in your mobile app, configure your primary Google AdMob App ID inside the manifest properties:</p>
+                
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>Open the file: <code style="color:#f472b6;">Android App/app/src/main/AndroidManifest.xml</code></li>
+                    <li>Scroll down inside the <code>&lt;application&gt;</code> element to locate the AdMob metadata tags:</li>
+                </ol>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        <span>AndroidManifest.xml (Lines 18-20)</span>
+                        <button class="copy-btn" onclick="copyCode(this, 'admob-code')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" /></svg>
+                            Copy
+                        </button>
+                    </div>
+                    <div class="code-body" id="admob-code">&lt;<span class="token-keyword">meta-data</span>
+    android:name=<span class="token-string">"com.google.android.gms.ads.APPLICATION_ID"</span>
+    android:value=<span class="token-string">"ca-app-pub-3940256099942544~3347511713"</span> /&gt; <span class="token-comment">&lt;!-- Replace value with AdMob App ID --&gt;</span></div>
+                </div>
+
+                <p>3. Replace the test application ID value (<code>ca-app-pub-3940256099942544~3347511713</code>) with your live production AdMob Application ID.</p>
+                
+                <div class="callout warning">
+                    <div class="callout-icon">⚠️</div>
+                    <div class="callout-body">
+                        <h4>Important Notice for Ad Units</h4>
+                        <p>Do not hardcode individual ad unit IDs (Banner, Reward, Interstitial) in the source code. You can configure them dynamically in the online <strong>Admin Panel</strong> under Mobile Application Settings once your server is live.</p>
+                    </div>
+                </div>
+
+                <div class="image-showcase">
+                    <img src="images/admob_setup.png" alt="AdMob configuration in manifest">
+                    <div class="image-caption">Setting AdMob metadata values inside AndroidManifest.xml</div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">6</div>
+                <h2 class="step-title">Generate Firebase SHA-1 Fingerprint</h2>
+            </div>
+            <div class="step-content">
+                <p>Google Sign-In requires your app's SHA-1 fingerprint registered in the Firebase Console. Without it, users will get a "Google Sign-In Failed" error.</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>Open your project in Android Studio.</li>
+                    <li>Click on the <strong>Gradle</strong> tab on the far right edge of the IDE window.</li>
+                    <li>Expand <code>SnapReels -> app -> Tasks -> android</code> and double click on <strong>signingReport</strong>.</li>
+                    <li>Look at the bottom Run console. Copy the <code>SHA1</code> string (e.g., <code>5B:23:45:67:89...</code>) under the <code>debug</code> and <code>release</code> variants.</li>
+                    <li>Go to your Firebase Console -> Project Settings -> General. Scroll down to your Android app and click <strong>Add fingerprint</strong>. Paste the SHA-1 key and save.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Step 7: Push Notifications -->
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">7</div>
+                <h2 class="step-title">Push Notification Setup (OneSignal)</h2>
+            </div>
+            <div class="step-content">
+                <p>SnapReels uses <strong>OneSignal</strong> to deliver real-time push notifications across both the Web platform and the native Android App seamlessly:</p>
+                
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>Log in to your account at <a href="https://onesignal.com" target="_blank" style="color: var(--primary);">OneSignal.com</a> and select or create your App.</li>
+                    <li>Go to <strong>Settings &gt; Keys &amp; IDs</strong> and copy your <strong>OneSignal App ID</strong> and <strong>REST API Key</strong>.</li>
+                    <li>In your SnapReels <strong>Admin Panel</strong>, navigate to <strong>Settings &gt; Plugins</strong>.</li>
+                    <li>Paste your <strong>OneSignal App ID</strong> and <strong>REST API Key</strong> into the OneSignal configuration section and click <strong>Save Changes</strong>.</li>
+                    <li>In Android Studio, open <code>app/src/main/java/com/example/data/AppConfig.kt</code> and set your <code>ONESIGNAL_APP_ID</code>. <em>(The Android app also dynamically syncs the App ID from your Admin Panel automatically)</em>.</li>
+                    <li>You can now broadcast push notifications to all Android and Web users directly from the <strong>Notification</strong> page (<code>/admin/notifications</code>) in your Admin Panel!</li>
+                </ol>
+                
+                <div class="callout warning">
+                    <div class="callout-icon">💡</div>
+                    <div class="callout-body">
+                        <h4>Notification Permission (Android 13+)</h4>
+                        <p>When users launch the app for the first time, SnapReels automatically prompts them with the native Android notification permission dialog to ensure maximum subscriber delivery.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">8</div>
+                <h2 class="step-title">Visual Customization (Themes & Deep Links)</h2>
+            </div>
+            <div class="step-content">
+                <h3 style="margin-top:20px; margin-bottom:10px; color:#fff;">App Name & Strings</h3>
+                <p>To change the name of the app shown on the user's home screen, open <code>app/src/main/res/values/strings.xml</code> and change <code>app_name</code>.</p>
+
+                <h3 style="margin-top:20px; margin-bottom:10px; color:#fff;">Color Theme</h3>
+                <p>To change the primary colors, gradients, and backgrounds of the app, open <code>app/src/main/java/com/example/ui/theme/Color.kt</code> and modify the Hex codes (e.g., <code>PrimaryPink</code>, <code>BackgroundDark</code>).</p>
+
+                <h3 style="margin-top:20px; margin-bottom:10px; color:#fff;">Deep Links (Intent Filters)</h3>
+                <p>To allow users to open web links directly inside your app (e.g., sharing a video), open <code>app/src/main/AndroidManifest.xml</code>. Locate the <code>&lt;intent-filter&gt;</code> under the MainActivity and replace <code>snapreels.gadohost.com</code> with your own domain name.</p>
+            </div>
+        </div>
+
+        <div class="step-card">
+            <div class="step-header">
+                <div class="step-number">9</div>
+                <h2 class="step-title">Generate Release Build for Play Store</h2>
+            </div>
+            <div class="step-content">
+                <p>Before submitting to Google Play, you must compile a signed Android App Bundle (.aab).</p>
+                <ol style="margin-left: 20px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 8px;">
+                    <li>In Android Studio, click on the top menu: <strong>Build -> Generate Signed Bundle / APK</strong>.</li>
+                    <li>Select <strong>Android App Bundle</strong> and click Next.</li>
+                    <li>Under Key store path, click <strong>Create new...</strong>. Choose a safe location on your computer to save your <code>.jks</code> file.</li>
+                    <li>Fill in a strong password, an alias (e.g., <code>release</code>), and your certificate details. <strong>IMPORTANT: Never lose this keystore file or its passwords, otherwise you can never update your app on the Play Store again!</strong></li>
+                    <li>Click Next, select the <strong>release</strong> build variant, and click Finish.</li>
+                    <li>Android Studio will generate an <code>app-release.aab</code> file in your <code>app/release/</code> folder. Upload this file to your Google Play Console!</li>
+                </ol>
+            </div>
+        </div>
+    
+    </main>
+
+    <!-- Clipboard Copy Script -->
+    <script>
+        function copyCode(button, textId) {
+            const codeBlock = document.getElementById(textId);
+            if (!codeBlock) return;
+            const textToCopy = codeBlock.innerText || codeBlock.textContent;
+
+            navigator.clipboard.writeText(textToCopy.trim()).then(() => {
+                const originalContent = button.innerHTML;
+                button.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+                    </svg> Copied!
+                `;
+                button.classList.add('copied');
+                setTimeout(() => {
+                    button.innerHTML = originalContent;
+                    button.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy text: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
