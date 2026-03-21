@@ -1,0 +1,23 @@
+{
+  "name": "SnapReels Pro",
+  "short_name": "SnapReels",
+  "description": "Explore a Universe of Drama.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#f857a6",
+  "icons": [
+    {
+      "src": "https://picsum.photos/seed/appicon/192/192",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://picsum.photos/seed/appicon/512/512",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

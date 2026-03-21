@@ -1,0 +1,118 @@
+{
+  "placeholderImages": [
+    {
+      "id": "hero-1",
+      "description": "Hero image for Accelerating Love",
+      "imageUrl": "https://picsum.photos/seed/hero1/1200/675",
+      "imageHint": "couple racing"
+    },
+    {
+      "id": "hero-2",
+      "description": "Hero image for a romance series",
+      "imageUrl": "https://picsum.photos/seed/hero2/1200/675",
+      "imageHint": "couple romance"
+    },
+    {
+      "id": "hero-3",
+      "description": "Hero image for a mystery series.",
+      "imageUrl": "https://picsum.photos/seed/hero3/1200/675",
+      "imageHint": "couple happy"
+    },
+    {
+      "id": "series-cover-1",
+      "description": "Cover for a futuristic sci-fi series.",
+      "imageUrl": "https://picsum.photos/seed/series1/400/600",
+      "imageHint": "futuristic city"
+    },
+    {
+      "id": "series-cover-2",
+      "description": "Cover for a historical drama.",
+      "imageUrl": "https://picsum.photos/seed/series2/400/600",
+      "imageHint": "ancient castle"
+    },
+    {
+      "id": "series-cover-3",
+      "description": "Cover for a mystery series.",
+      "imageUrl": "https://picsum.photos/seed/series3/400/600",
+      "imageHint": "foggy forest"
+    },
+    {
+      "id": "series-cover-4",
+      "description": "Cover for a cyberpunk series.",
+      "imageUrl": "https://picsum.photos/seed/series4/400/600",
+      "imageHint": "neon city"
+    },
+    {
+      "id": "ep-thumb-1",
+      "description": "Episode thumbnail of a starship.",
+      "imageUrl": "https://picsum.photos/seed/ep1/400/225",
+      "imageHint": "starship bridge"
+    },
+    {
+      "id": "ep-thumb-2",
+      "description": "Episode thumbnail of a desolate planet.",
+      "imageUrl": "https://picsum.photos/seed/ep2/400/225",
+      "imageHint": "alien planet"
+    },
+    {
+      "id": "ep-thumb-3",
+      "description": "Episode thumbnail of a venetian canal.",
+      "imageUrl": "https://picsum.photos/seed/ep3/400/225",
+      "imageHint": "venice canal"
+    },
+    {
+      "id": "ep-thumb-4",
+      "description": "Episode thumbnail of a small town at dusk.",
+      "imageUrl": "https://picsum.photos/seed/ep4/400/225",
+      "imageHint": "small town"
+    },
+    {
+      "id": "ep-thumb-5",
+      "description": "Episode thumbnail showing digital code.",
+      "imageUrl": "https://picsum.photos/seed/ep5/400/225",
+      "imageHint": "digital code"
+    },
+    {
+      "id": "cast-avatar-1",
+      "description": "Avatar for Elena Petrova.",
+      "imageUrl": "https://picsum.photos/seed/cast1/100/100",
+      "imageHint": "woman portrait"
+    },
+    {
+      "id": "cast-avatar-2",
+      "description": "Avatar for Marcus Thorne.",
+      "imageUrl": "https://picsum.photos/seed/cast2/100/100",
+      "imageHint": "man portrait"
+    },
+    {
+      "id": "cast-avatar-3",
+      "description": "Avatar for Aria Chen.",
+      "imageUrl": "https://picsum.photos/seed/cast3/100/100",
+      "imageHint": "woman scientist"
+    },
+    {
+      "id": "cast-avatar-4",
+      "description": "Avatar for Giovanni Rossi.",
+      "imageUrl": "https://picsum.photos/seed/cast4/100/100",
+      "imageHint": "man renaissance"
+    },
+    {
+      "id": "cast-avatar-5",
+      "description": "Avatar for Isabella Conti.",
+      "imageUrl": "https://picsum.photos/seed/cast5/100/100",
+      "imageHint": "woman renaissance"
+    },
+    {
+      "id": "cast-avatar-6",
+      "description": "Avatar for a Sheriff.",
+      "imageUrl": "https://picsum.photos/seed/cast6/100/100",
+      "imageHint": "man detective"
+    },
+    {
+      "id": "cast-avatar-7",
+      "description": "Avatar for a hacker.",
+      "imageUrl": "https://picsum.photos/seed/cast7/100/100",
+      "imageHint": "woman cyberpunk"
+    }
+  ]
+}
