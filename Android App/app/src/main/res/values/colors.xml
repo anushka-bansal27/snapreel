@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Website & App Theme Colors -->
+    <color name="primary_color">#F42452</color>
+    <color name="background_color">#0A0A0A</color>
+    <color name="card_color">#141414</color>
+    <color name="secondary_color">#242427</color>
+    <color name="gold_color">#EAB308</color>
+    <color name="text_primary_color">#FAFAFA</color>
+    <color name="text_muted_color">#A1A1AA</color>
+    
+    <!-- Legacy definitions to avoid potential manifest/theme breakages -->
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+</resources>

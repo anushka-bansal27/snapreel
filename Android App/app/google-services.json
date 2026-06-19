@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "171338452565",
+    "project_id": "studio-xxxxxxxx-886e3",
+    "storage_bucket": "studio-xxxxxxxx-886e3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:171338452565:android:ce1928b3c8be52a51c0edc",
+        "android_client_info": {
+          "package_name": "com.snapreels.devsnaplix"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "xxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.snapreels.devsnaplix",
+            "certificate_hash": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+          }
+        },
+        {
+          "client_id": "xxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "xxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
