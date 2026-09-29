@@ -1,0 +1,657 @@
+
+{
+  "entities": {
+    "Series": {
+      "title": "Series",
+      "type": "object",
+      "description": "Represents a drama series, containing core information and linking to its components like seasons, cast, and genres.",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "The main title of the drama series."
+        },
+        "description": {
+          "type": "string",
+          "description": "A detailed summary or synopsis of the series."
+        },
+        "releaseYear": {
+          "type": "number",
+          "description": "The year the series was first released."
+        },
+        "status": {
+          "type": "string",
+          "description": "The current production status of the series (e.g., 'ongoing', 'completed', 'upcoming', 'on-hiatus')."
+        },
+        "coverUrl": {
+          "type": "string",
+          "description": "URL to the series' primary cover art."
+        },
+        "genres": {
+          "type": "array",
+          "description": "An array of genre names associated with this series.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "description": "An array of keyword tags for discoverability.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Timestamp when the series record was created.",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Timestamp when the series record was last updated.",
+          "format": "date-time"
+        },
+        "slug": {
+          "type": "string",
+          "description": "URL-friendly slug for the series."
+        },
+        "isFeatured": {
+          "type": "boolean",
+          "description": "Whether the series is featured on the homepage (Hero Carousel)."
+        },
+        "isPremium": {
+          "type": "boolean",
+          "description": "Whether the series is marked as Premium (shows badge)."
+        },
+        "freeEpisodesCount": {
+          "type": "number",
+          "description": "Number of episodes that are free to watch."
+        },
+        "language": {
+          "type": "string",
+          "description": "The primary language of the series content, represented by an ISO 639-1 code."
+        },
+        "tmdbId": {
+          "type": "number",
+          "description": "The Movie Database (TMDB) ID for this series."
+        }
+      },
+      "required": [
+        "title",
+        "description",
+        "coverUrl"
+      ]
+    },
+    "Episode": {
+      "title": "Episode",
+      "type": "object",
+      "description": "Represents an individual episode within a series.",
+      "properties": {
+        "seriesId": {
+          "type": "string",
+          "description": "Reference to the Series this episode belongs to."
+        },
+        "episodeInSeason": {
+          "type": "number",
+          "description": "The sequential number of the episode within its series."
+        },
+        "videoSources": {
+          "type": "array",
+          "description": "An array of video sources for different qualities.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "quality": {
+                "type": "string",
+                "description": "The quality label (e.g., '1080p', '720p')."
+              },
+              "url": {
+                "type": "string",
+                "description": "The URL to the video file for this quality."
+              }
+            },
+            "required": [
+              "quality",
+              "url"
+            ]
+          }
+        }
+      },
+      "required": [
+        "seriesId",
+        "episodeInSeason"
+      ]
+    },
+    "Category": {
+      "title": "Category",
+      "type": "object",
+      "description": "Defines categories or genres for drama series.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the category (e.g., 'Romance', 'Action')."
+        },
+        "slug": {
+          "type": "string",
+          "description": "URL-friendly slug for the category."
+        },
+        "showOnHomepage": {
+          "type": "boolean",
+          "description": "Whether this category should be shown on the homepage."
+        }
+      },
+      "required": [
+        "name",
+        "slug"
+      ]
+    },
+    "UserProfile": {
+      "title": "User Profile",
+      "type": "object",
+      "description": "Stores public-facing profile information for a user.",
+      "properties": {
+        "displayName": {
+          "type": "string",
+          "description": "The user's public display name."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "The user's email address."
+        },
+        "photoURL": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of the user's profile picture."
+        },
+        "coins": {
+          "type": "number",
+          "description": "The number of coins the user has."
+        },
+        "isVip": {
+          "type": "boolean",
+          "description": "Whether the user is a VIP."
+        },
+        "disabled": {
+          "type": "boolean",
+          "description": "Whether the user's account is disabled."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the user profile was created."
+        },
+        "publicId": {
+          "type": "string",
+          "description": "Public-facing 8-digit user ID."
+        }
+      },
+      "required": [
+        "email",
+        "createdAt"
+      ]
+    },
+    "Favorite": {
+      "title": "Favorite",
+      "type": "object",
+      "description": "Represents a user's favorited series.",
+      "properties": {
+        "seriesId": {
+          "type": "string",
+          "description": "The ID of the favorited series."
+        },
+        "favoritedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the series was favorited."
+        }
+      },
+      "required": [
+        "seriesId",
+        "favoritedAt"
+      ]
+    },
+    "ContactMessage": {
+      "title": "Contact Message",
+      "type": "object",
+      "description": "Represents a message submitted through the contact form.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Sender's name."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Sender's email."
+        },
+        "subject": {
+          "type": "string",
+          "description": "Message subject."
+        },
+        "message": {
+          "type": "string",
+          "description": "The message content."
+        },
+        "isRead": {
+          "type": "boolean",
+          "description": "Whether the message has been read by an admin."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of submission."
+        }
+      },
+      "required": [
+        "name",
+        "email",
+        "message",
+        "isRead",
+        "createdAt"
+      ]
+    },
+    "CustomPage": {
+      "title": "Custom Page",
+      "type": "object",
+      "description": "A custom page with static content.",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "slug": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "showInFooter": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "title",
+        "slug",
+        "content"
+      ]
+    },
+    "Purchase": {
+      "title": "Purchase",
+      "type": "object",
+      "description": "Represents a successful coin pack purchase.",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "The ID of the user who made the purchase."
+        },
+        "userEmail": {
+          "type": "string",
+          "description": "The email of the user for reference.",
+          "format": "email"
+        },
+        "userName": {
+          "type": "string",
+          "description": "The name of the user who made the purchase for reference."
+        },
+        "packId": {
+          "type": "string",
+          "description": "The ID of the purchased coin pack."
+        },
+        "packName": {
+          "type": "string",
+          "description": "The name of the purchased coin pack."
+        },
+        "amount": {
+          "type": "number",
+          "description": "The amount of coins purchased."
+        },
+        "price": {
+          "type": "number",
+          "description": "The price paid in USD."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp of the purchase."
+        }
+      },
+      "required": [
+        "userId",
+        "userEmail",
+        "packId",
+        "packName",
+        "amount",
+        "price",
+        "createdAt"
+      ]
+    },
+    "StorageSettings": {
+      "title": "Storage Settings",
+      "type": "object",
+      "description": "Configuration for media storage providers.",
+      "properties": {
+        "activeProvider": {
+          "type": "string",
+          "enum": [
+            "local",
+            "digitalocean",
+            "s3",
+            "gcs",
+            "backblaze"
+          ],
+          "description": "The currently active storage provider."
+        }
+      }
+    },
+    "AnalyticsData": {
+      "title": "Analytics Data",
+      "type": "object",
+      "description": "Represents a single user visit for analytics.",
+      "properties": {
+        "ip": {
+          "type": "string"
+        },
+        "country": {
+          "type": "string"
+        },
+        "countryCode": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        },
+        "browserName": {
+          "type": "string"
+        },
+        "osName": {
+          "type": "string"
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "ip",
+        "timestamp"
+      ]
+    },
+    "AdminProfile": {
+      "title": "Admin Profile",
+      "type": "object",
+      "description": "Stores the credentials for the admin panel user.",
+      "properties": {
+        "username": {
+          "type": "string",
+          "description": "The admin's username for login."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "The admin's email address."
+        },
+        "passwordHash": {
+          "type": "string",
+          "description": "The hashed admin password."
+        },
+        "passwordSalt": {
+          "type": "string",
+          "description": "The salt for the admin password hash."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The name to display in the UI."
+        }
+      },
+      "required": [
+        "username",
+        "email",
+        "displayName"
+      ]
+    },
+    "GeneralSettings": {
+        "title": "General Settings",
+        "type": "object",
+        "description": "Global settings for the application.",
+        "properties": {
+            "siteName": {"type": "string"},
+            "siteUrl": {"type": "string", "format": "uri"},
+            "logoUrl": {"type": "string", "format": "uri"},
+            "faviconUrl": {"type": "string", "format": "uri"},
+            "copyrightText": {"type": "string"},
+            "appVersion": {"type": "string"},
+            "seriesUrlFormat": {"type": "string", "enum": ["hash", "slug"]},
+            "defaultLanguageCode": {"type": "string"},
+            "showSocialsInFooter": {"type": "boolean"},
+            "socials": {
+                "type": "object",
+                "properties": {
+                    "facebook": {"type": "string", "format": "uri"},
+                    "instagram": {"type": "string", "format": "uri"},
+                    "tiktok": {"type": "string", "format": "uri"},
+                    "youtube": {"type": "string", "format": "uri"},
+                    "twitter": {"type": "string", "format": "uri"}
+                }
+            },
+            "licenseKey": {"type": "string"},
+            "codecanyonUsername": {"type": "string"},
+            "isLicenseActive": {"type": "boolean"},
+            "appStoreUrl": {"type": "string", "format": "uri"},
+            "playStoreUrl": {"type": "string", "format": "uri"},
+            "apiKey": {"type": "string"}
+        }
+    },
+    "Report": {
+      "title": "Report",
+      "type": "object",
+      "description": "Represents a user-submitted report about content.",
+      "properties": {
+        "reporterUid": {
+          "type": "string",
+          "description": "The UID of the user who submitted the report."
+        },
+        "reporterEmail": {
+          "type": "string",
+          "format": "email",
+          "description": "The email of the reporting user."
+        },
+        "reportedContentRef": {
+          "type": "string",
+          "description": "A reference to the reported content (e.g., 'series/seriesId' or 'episodes/episodeId')."
+        },
+        "reportedContentTitle": {
+          "type": "string",
+          "description": "The title of the reported content for easy identification."
+        },
+        "seriesId": {
+          "type": "string",
+          "description": "The ID of the series related to the report."
+        },
+        "reason": {
+          "type": "string",
+          "description": "The reason for the report."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["open", "resolved", "dismissed"],
+          "description": "The status of the report."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the report was submitted."
+        }
+      },
+      "required": ["reporterUid", "reportedContentRef", "reason", "status", "createdAt"]
+    }
+  },
+  "auth": {
+    "providers": [
+      "password",
+      "google.com"
+    ]
+  },
+  "firestore": {
+    "/series/{seriesId}": {
+      "schema": {
+        "$ref": "#/entities/Series"
+      },
+      "description": "Collection for all drama series. Publicly readable."
+    },
+    "/episodes/{episodeId}": {
+      "schema": {
+        "$ref": "#/entities/Episode"
+      },
+      "description": "Collection for all episodes. Publicly readable."
+    },
+    "/categories/{categoryId}": {
+      "schema": {
+        "$ref": "#/entities/Category"
+      },
+      "description": "Collection for all content categories. Publicly readable."
+    },
+    "/pages/{pageId}": {
+      "schema": {
+        "$ref": "#/entities/CustomPage"
+      },
+      "description": "Collection for custom static pages. Publicly readable."
+    },
+    "/contacts/{contactId}": {
+      "schema": {
+        "$ref": "#/entities/ContactMessage"
+      },
+      "description": "Collection for contact form submissions. Writable by anyone, readable by admins."
+    },
+    "/purchases/{purchaseId}": {
+      "schema": {
+        "$ref": "#/entities/Purchase"
+      },
+      "description": "Root collection for all successful purchases for easy querying and analytics. Writable by users, readable by admins."
+    },
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/UserProfile"
+      },
+      "description": "Collection for user profile data. Only the user can read/write their own profile."
+    },
+    "/users/{userId}/favorites/{seriesId}": {
+      "schema": {
+        "$ref": "#/entities/Favorite"
+      },
+      "description": "Subcollection for a user's favorite series. Document ID is the series ID."
+    },
+    "/users/{userId}/history/{seriesId}": {
+      "description": "Subcollection for a user's watch history. Document ID is the series ID.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "episodeId": {
+            "type": "string"
+          },
+          "episodeInSeason": {
+            "type": "number"
+          },
+          "watchedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "progress": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "/users/{userId}/unlockedEpisodes/{episodeId}": {
+      "description": "Subcollection for episodes a user has unlocked.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "seriesId": {
+            "type": "string"
+          },
+          "unlockedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "/users/{userId}/coinTransactions/{transactionId}": {
+      "description": "Subcollection for a user's coin transactions.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "purchase",
+              "spend"
+            ]
+          },
+          "amount": {
+            "type": "number"
+          },
+          "description": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "/users/{userId}/adWatches/{dateId}": {
+      "description": "Tracks the number of ads a user has watched on a given day.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "/admins/{userId}": {
+      "description": "Collection to designate administrators. Document ID is the user's UID.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "isAdmin": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "/settings/{settingId}": {
+      "description": "Collection for global application settings.",
+      "schema": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    "/settings/storage": {
+      "schema": {
+        "$ref": "#/entities/StorageSettings"
+      },
+      "description": "Singleton document for media storage settings."
+    },
+    "/settings/admin": {
+      "schema": {
+        "$ref": "#/entities/AdminProfile"
+      },
+      "description": "Singleton document for the admin user credentials."
+    },
+    "/analytics/{analyticId}": {
+      "schema": {
+        "$ref": "#/entities/AnalyticsData"
+      },
+      "description": "Collection to store user visit analytics."
+    },
+    "/reports/{reportId}": {
+      "schema": {
+        "$ref": "#/entities/Report"
+      },
+      "description": "Collection for user-submitted content reports. Writable by authenticated users, readable by admins."
+    }
+  }
+}

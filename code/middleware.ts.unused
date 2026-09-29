@@ -1,0 +1,96 @@
+'use server';
+import { NextResponse, type NextRequest } from 'next/server';
+import { i18n } from '@/i18n-config';
+
+const { locales, defaultLocale: staticDefaultLocale } = i18n;
+
+let cachedDefaultLocale = '';
+let cacheTime = 0;
+
+async function getDefaultLocale(origin: string, cookieLocale?: string): Promise<string> {
+    if (cookieLocale) {
+        return cookieLocale;
+    }
+    if (cachedDefaultLocale && Date.now() - cacheTime < 10000) {
+        return cachedDefaultLocale;
+    }
+    try {
+        const res = await fetch(`${origin}/api/default-locale`);
+        if (res.ok) {
+            const data = await res.json();
+            if (data.defaultLocale) {
+                cachedDefaultLocale = data.defaultLocale;
+                cacheTime = Date.now();
+                return cachedDefaultLocale;
+            }
+        }
+    } catch (e) {
+        console.error('Failed to fetch default locale in middleware:', e);
+    }
+    return staticDefaultLocale;
+}
+
+export async function middleware(request: NextRequest) {
+    const { pathname } = request.nextUrl;
+    console.log('[DEBUG] Running ROOT middleware for path:', pathname);
+
+    if (pathname.startsWith('/uploads/videos/')) {
+        return new NextResponse('Access Denied: Direct file access is forbidden', { status: 403 });
+    }
+
+    if (
+        pathname.startsWith('/_next') ||
+        pathname.startsWith('/api') ||
+        pathname.startsWith('/uploads') ||
+        pathname.includes('.')
+    ) {
+        return NextResponse.next();
+    }
+
+    if (pathname === '/install' || pathname.startsWith('/install/')) {
+        return NextResponse.next();
+    }
+
+    if (pathname === '/admin' || pathname.startsWith('/admin/')) {
+        const authCookie = request.cookies.get('auth');
+        const isLoggedIn = authCookie?.value === 'true';
+        const isAdminLoginPage = pathname === '/admin/login';
+
+        if (!isLoggedIn && !isAdminLoginPage) {
+            return NextResponse.redirect(new URL('/admin/login', request.url));
+        }
+        if (isLoggedIn && isAdminLoginPage) {
+            return NextResponse.redirect(new URL('/admin', request.url));
+        }
+        return NextResponse.next();
+    }
+
+    const userLocale = request.cookies.get('userLocale')?.value;
+    const defaultLocaleCookie = request.cookies.get('defaultLocale')?.value;
+    const resolvedLocale = userLocale || defaultLocaleCookie;
+    const defaultLocale = await getDefaultLocale(request.nextUrl.origin, resolvedLocale);
+
+    const pathnameHasLocale = locales.some(
+        (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
+    );
+
+    if (pathname.startsWith(`/${defaultLocale}/`) || pathname === `/${defaultLocale}`) {
+        const newPath = pathname.replace(`/${defaultLocale}`, '') || '/';
+        return NextResponse.redirect(new URL(newPath, request.url));
+    }
+    
+    if (!pathnameHasLocale) {
+        const newUrl = request.nextUrl.clone();
+        newUrl.pathname = `/${defaultLocale}${pathname}`;
+        return NextResponse.rewrite(newUrl);
+    }
+    
+    return NextResponse.next();
+}
+
+export const config = {
+  matcher: [
+    '/((?!api|_next/static|_next/image|uploads|favicon.ico|robots.txt|manifest.json|sitemap.xml).*)',
+    '/uploads/videos/:path*',
+  ],
+};
